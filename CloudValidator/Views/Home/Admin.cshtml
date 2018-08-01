@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Admin";
+}
+@Scripts.Render("~/bundles/admin")
+
+<section>
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="row">
+                <label class="control-label col-sm-2" for="apptype">Application Type:</label>
+                <select class="form-control col-sm-10" id="apptype" data-bind="value: appType">
+                    <option value="" disabled selected>Select your option</option>
+                    <option value="Dotnet">.Net</option>
+                    <option value="Java">Java</option>
+                    <option value="NodeJs">NodeJs</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="row">
+                <label class="control-label col-sm-2" for="factor">Factor:</label>
+                <select class="form-control col-sm-10" id="factor" data-bind="value: factor">
+                    <option value="" disabled selected>Select your option</option>
+                    <option value="Logs">Externalised Logging</option>
+                    <option value="Config">Externalised Config</option>
+                    <option value="Backing">Backing Services</option>
+                    <option value="Codebase">Single Codebase</option>
+                    <option value="Dependencies">Isolated Dependencies</option>
+                    <option value="Deployment">Deployment Methodology</option>
+                    <option value="Processes">Stateless Processes</option>
+                    <option value="Port_binding">Port Binding</option>
+                    <option value="Concurrency">Concurrency</option>
+                    <option value="Disposability">Robust and Resilient System</option>
+                    <option value="Envvironment">Similar Environments</option>
+                    <option value="Admin_processes">Admin processes packaged with application</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <button class="btn btn-success" data-bind="click: saveRule">Save Rule</button>
+        </div>
+    </div>
+    <div class="panel panel-danger" data-bind="visible: includeRules().length > 0">
+        <div class="panel-heading">
+            <h3 class="panel-title">Include Rules</h3>
+        </div>
+        <div class="panel-body">
+            <div class="existingRules"></div>
+            <button class="btn btn-primary" data-bind="click: addIncludeRule">Add Rule</button>
+            <div class="newRules" data-bind="foreach: includeRules">
+                <div class="well">
+                    <input type="text" class="form-control" placeholder="Enter rule name" data-bind="value: RuleName" />
+                    <div data-bind="foreach: RuleConditions" class="rule_conditions">
+                        <div class="row rule_condition">
+                            <div class="col-sm-4">
+                                <select class="form-control" data-bind="value: RuleConditionType">
+                                    <option value="" disabled selected>Select your option</option>
+                                    <option value="ContainsAny">ContainsAny</option>
+                                    <option value="NotContainsAny">NotContainsAny</option>
+                                    <option value="ContainsAll">ContainsAll</option>
+                                    <option value="NotContainsAll">NotContainsAll</option>
+                                    <option value="StartsWith">StartsWith</option>
+                                    <option value="EndsWith">EndsWith</option>
+                                    <option value="RegEx">RegEx</option>
+                                    <option value="SearchOnlyIn">SearchOnlyIn</option>
+                                    <option value="Exactly">Exactly</option>
+                                    <option value="CaseSenitive">CaseSenitive</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" data-bind="value: RuleConditionValue" placeholder="Enter rule text" />
+                            </div>
+                            <span data-bind="text: $parent.length"></span>
+                            <!-- ko if: $index() === ko.unwrap($parent.RuleConditions).length - 1 -->
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary" data-bind="click: function() { $root.addRuleCondition($parent) }">Add</button>
+                            </div>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-success" data-bind="visible: excludeRules().length > 0">
+        <div class="panel-heading">
+            <h3 class="panel-title">Exclude Rules</h3>
+        </div>
+        <div class="panel-body">
+            <div class="existingRules"></div>
+            <button class="btn btn-primary" data-bind="click: addExcludeRule">Add Rule</button>
+            <div class="newRules" data-bind="foreach: excludeRules">
+                <div class="well">
+
+                    <input type="text" class="form-control" placeholder="Enter rule name" data-bind="value: RuleName" />
+                    <div data-bind="foreach: RuleConditions" class="rule_conditions">
+                        <div class="row rule_condition">
+                            <div class="col-sm-4">
+                                <select class="form-control" data-bind="value: RuleConditionType">
+                                    <option value="" disabled selected>Select your option</option>
+                                    <option value="ContainsAny">ContainsAny</option>
+                                    <option value="NotContainsAny">NotContainsAny</option>
+                                    <option value="ContainsAll">ContainsAll</option>
+                                    <option value="NotContainsAll">NotContainsAll</option>
+                                    <option value="StartsWith">StartsWith</option>
+                                    <option value="EndsWith">EndsWith</option>
+                                    <option value="RegEx">RegEx</option>
+                                    <option value="SearchOnlyIn">SearchOnlyIn</option>
+                                    <option value="Exactly">Exactly</option>
+                                    <option value="CaseSenitive">CaseSenitive</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" data-bind="value: RuleConditionValue" placeholder="Enter rule text" />
+                            </div>
+                            <span data-bind="text: $parent.length"></span>
+                            <!-- ko if: $index() === ko.unwrap($parent.RuleConditions).length - 1 -->
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary" data-bind="click: function() { $root.addRuleCondition($parent) }">Add</button>
+                            </div>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

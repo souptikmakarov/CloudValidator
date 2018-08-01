@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@Scripts.Render("~/bundles/index")
+
+<section class="step1">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="codesource">Codebase Source:</label>
+            <select class="form-control" id="codesource" data-bind="value: codeSourceType">
+                <option value="folder">Folder Upload</option>
+                <option value="github">Github</option>
+                <option value="tfs">Team Foundation Server</option>
+            </select>
+        </div>
+        <!-- ko if: codeSourceType() == "folder" -->
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="codesource">Upload zipped folder of your project:</label>
+            <input type="file" value="Upload Zip" accept=".zip" />
+        </div>
+        <!-- /ko -->
+        <!-- ko ifnot: codeSourceType() == "folder" -->
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="codesource">Codebase Source:</label>
+            <input class="form-control" type="text" placeholder="Enter the link to your project" data-bind="value: codeSourceLink" />
+        </div>
+        <!-- /ko -->
+        <div class="form-group">
+            <ul class="factor_list">
+                <li><label><input type="checkbox" value="Logs" placeholder="Externalised Logging" />Externalised Logging</label></li>
+                <li><label><input type="checkbox" value="Config" />Externalised Config</label></li>
+                <li><label><input type="checkbox" value="Backing" />Backing Services</label></li>
+                <li><label><input type="checkbox" value="Codebase" disabled />Single Codebase</label></li>
+                <li><label><input type="checkbox" value="Dependencies" disabled />Isolated Dependencies</label></li>
+                <li><label><input type="checkbox" value="Deployment" disabled />Deployment Methodology</label></li>
+                <li><label><input type="checkbox" value="Processes" disabled />Stateless Processes</label></li>
+                <li><label><input type="checkbox" value="Port_binding" disabled />Port Binding</label></li>
+                <li><label><input type="checkbox" value="Concurrency" disabled />Concurrency</label></li>
+                <li><label><input type="checkbox" value="Disposability" disabled />Robust and Resilient System</label></li>
+                <li><label><input type="checkbox" value="Envvironment" disabled />Similar Environments</label></li>
+                <li><label><input type="checkbox" value="Admin_processes" disabled />Admin processes packaged with application</label></li>
+            </ul>
+        </div>
+        <input type="button" class="btn btn-primary validate-btn" data-bind="click: Validate" value="Validate" />
+</form>
+</section>
