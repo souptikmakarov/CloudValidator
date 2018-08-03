@@ -1,0 +1,91 @@
+﻿[
+  {
+    "Application": "DotNet",
+    "FactorType": "Logs",
+    "Include": [
+      {
+        "RuleName": "Rule1",
+        "RuleConditions": [
+          { "ContainsAny": [ "InclusiveConditions", "Console.", ".WriteLine(" ] },
+          { "SearchOnlyIn": [ "*.cs" ] },
+          { "CaseSenitive": false }
+        ]
+      },
+      {
+        "RuleName": "Rule2",
+        "RuleConditions": [
+          { "ContainsAll": [ "Serilog.", "using Serilog" ] },
+          { "SearchOnlyIn": [ "*.cs" ] },
+          { "CaseSenitive": true }
+        ]
+      }
+    ],
+    "Exclude": [
+      {
+        "RuleName": "Rule1",
+        "RuleConditions": [
+          { "ContainsAny": [ "using Serilog", ".EventLog(", "System.Diagnostics" ] },
+          { "SearchOnlyIn": [ "*.cs" ] },
+          { "CaseSenitive": true }
+        ]
+      },
+      {
+        "RuleName": "Rule2",
+        "RuleConditions": [
+          { "ContainsAny": [ "File.", "File.Write", "FileInfo.", "System.IO" ] },
+          { "SearchOnlyIn": [ "*.cs" ] },
+          { "CaseSenitive": false }
+        ]
+      }
+    ]
+  },
+  {
+    "Application": "DotNet",
+    "FactorType": "Config",
+    "Include": [
+      {
+        "RuleName": "Rule1",
+        "RuleConditions": [
+          { "ContainsAny": [ "using Steeltoe", "new ConfigurationBuilder()", "AddCloudFoundry", "vcap:" ] },
+          { "SearchOnlyIn": [ "*.cs" ] },
+          { "CaseSenitive": false }
+        ]
+      }
+    ],
+    "Exclude": [
+      {
+        "RuleName": "Rule1",
+        "RuleConditions": [
+          { "ContainsAny": [ "System.Configuration", "ConfigurationManager.AppSettings[" ] },
+          { "SearchOnlyIn": [ "*.cs" ] },
+          { "CaseSenitive": true }
+        ]
+      }
+    ]
+  },
+  {
+    "Application": "DotNet",
+    "FactorType": "Backing",
+    "Include": [
+      {
+        "RuleName": "Rule1",
+        "RuleConditions": [
+          { "NotContainsAny": [ "Password=", "Data Source=", "User Name=" ] },
+          { "ContainsAny": [ "using Steeltoe", "new ConfigurationBuilder()", "AddCloudFoundry", "vcap:" ] },
+          { "SearchOnlyIn": [ "*.cs" ] },
+          { "CaseSenitive": false }
+        ]
+      }
+    ],
+    "Exclude": [
+      {
+        "RuleName": "Rule1",
+        "RuleConditions": [
+          { "ContainsAny": [ "Password=", "Data Source=", "User Name=" ] },
+          { "SearchOnlyIn": [ "*.cs" ] },
+          { "CaseSenitive": true }
+        ]
+      }
+    ]
+  }
+]

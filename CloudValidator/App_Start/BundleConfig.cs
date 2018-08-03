@@ -34,6 +34,21 @@ namespace CloudValidator
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatablejs").Include(
+                "~/Scripts/dataTables.js", "~/Scripts/jquery.dataTables.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/datatablecss").Include(
+                "~/Content/dataTables.css"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/acejs").Include(
+                "~/Scripts/ace.js", "~/Scripts/mode-csharp.js", "~/Scripts/mode-javascript.js", "~/Scripts/theme-monokai.js"));
+
+            bundles.Add(new StyleBundle("~/Content/acecss").Include(
+                "~/Content/ace_api.css.css"));
+
+
         }
     }
 }

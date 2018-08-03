@@ -1,0 +1,144 @@
+{
+  "data": [
+    {
+      "application": "DotNet",
+      "factorName": "Logs",
+      "responseInfo": [
+        {
+          "fileName": "C:\\Work\\Hackathon\\Microservice Hackathon\\source\\\\helloworld_v1\\BackingServiceFactor.cs",
+          "ruleName": "Rule1",
+          "ruleType": "Include",
+          "ruleStatus": true,
+          "conditons": {
+            "ContainsAny": [
+              "InclusiveConditions",
+              "Console.",
+              ".WriteLine("
+            ],
+            "SearchOnlyIn": [
+              "*.cs"
+            ],
+            "CaseSenitive": false
+          },
+          "validationDetailedInfo": {
+            "ContainsAny": [
+              "Matches Found @ Line Number 30 Text:        public IFactor InclusiveConditions(List<Rules> rules)"
+            ]
+          },
+          "recommendations": {}
+        },
+        {
+          "fileName": "C:\\Work\\Hackathon\\Microservice Hackathon\\source\\\\helloworld_v1\\BackingServiceFactor.cs",
+          "ruleName": "Rule2",
+          "ruleType": "Include",
+          "ruleStatus": false,
+          "conditons": {
+            "ContainsAll": [
+              "Serilog.",
+              "using Serilog"
+            ],
+            "SearchOnlyIn": [
+              "*.cs"
+            ],
+            "CaseSenitive": true
+          },
+          "validationDetailedInfo": {},
+          "recommendations": {}
+        },
+        {
+          "fileName": "C:\\Work\\Hackathon\\Microservice Hackathon\\source\\\\helloworld_v1\\BackingServiceFactor.cs",
+          "ruleName": "Rule1",
+          "ruleType": "Exclude",
+          "ruleStatus": true,
+          "conditons": {
+            "ContainsAny": [
+              "using Serilog",
+              ".EventLog(",
+              "System.Diagnostics"
+            ],
+            "SearchOnlyIn": [
+              "*.cs"
+            ],
+            "CaseSenitive": true
+          },
+          "validationDetailedInfo": {
+            "ContainsAny": [
+              "Matches Found @ Line Number 9 Text:using Serilog;"
+            ]
+          },
+          "recommendations": {}
+        },
+        {
+          "fileName": "C:\\Work\\Hackathon\\Microservice Hackathon\\source\\\\helloworld_v1\\BackingServiceFactor.cs",
+          "ruleName": "Rule2",
+          "ruleType": "Exclude",
+          "ruleStatus": false,
+          "conditons": {
+            "ContainsAny": [
+              "File.",
+              "File.Write",
+              "FileInfo.",
+              "System.IO"
+            ],
+            "SearchOnlyIn": [
+              "*.cs"
+            ],
+            "CaseSenitive": false
+          },
+          "validationDetailedInfo": {
+            "ContainsAny": []
+          },
+          "recommendations": {}
+        }
+      ]
+    },
+    {
+      "application": "DotNet",
+      "factorName": "Config",
+      "responseInfo": [
+        {
+          "fileName": "C:\\Work\\Hackathon\\Microservice Hackathon\\source\\\\helloworld_v1\\BackingServiceFactor.cs",
+          "ruleName": "Rule1",
+          "ruleType": "Include",
+          "ruleStatus": false,
+          "conditons": {
+            "ContainsAny": [
+              "using Steeltoe",
+              "new ConfigurationBuilder()",
+              "AddCloudFoundry",
+              "vcap:"
+            ],
+            "SearchOnlyIn": [
+              "*.cs"
+            ],
+            "CaseSenitive": false
+          },
+          "validationDetailedInfo": {
+            "ContainsAny": []
+          },
+          "recommendations": {}
+        },
+        {
+          "fileName": "C:\\Work\\Hackathon\\Microservice Hackathon\\source\\\\helloworld_v1\\BackingServiceFactor.cs",
+          "ruleName": "Rule1",
+          "ruleType": "Exclude",
+          "ruleStatus": false,
+          "conditons": {
+            "ContainsAny": [
+              "System.Configuration",
+              "ConfigurationManager.AppSettings["
+            ],
+            "SearchOnlyIn": [
+              "*.cs"
+            ],
+            "CaseSenitive": true
+          },
+          "validationDetailedInfo": {
+            "ContainsAny": []
+          },
+          "recommendations": {}
+        }
+      ]
+    }
+  ]
+}

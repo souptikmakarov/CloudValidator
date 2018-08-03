@@ -40,6 +40,7 @@
             <button class="btn btn-success" data-bind="click: saveRule">Save Rule</button>
         </div>
     </div>
+    <div class="loader" data-bind="visible: isLoading"></div>
     <div class="panel panel-danger" data-bind="visible: includeRules().length > 0">
         <div class="panel-heading">
             <h3 class="panel-title">Include Rules</h3>

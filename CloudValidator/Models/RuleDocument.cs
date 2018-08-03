@@ -18,4 +18,10 @@ namespace CloudValidator.Models
         public string RuleName { get; set; }
         public List<dynamic> RuleConditions { get; set; }
     }
+
+    public class PostData
+    {
+        public string Rule { get; set; }
+        public string Id { get; set; }
+    }
 }
