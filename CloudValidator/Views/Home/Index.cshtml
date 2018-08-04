@@ -4,7 +4,7 @@
 @Scripts.Render("~/bundles/index")
 
 <section class="step1">
-    <form class="form-horizontal">
+    <form class="form-horizontal" id="validationForm" enctype="multipart/form-data" method="post" name="validationForm">
         <div class="form-group">
             <div class="col-md-12">
                 <div class="col-md-6">
@@ -19,7 +19,7 @@
                 <!-- ko if: codeSourceType() == "folder" -->
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="codesource">Upload zipped folder of your project:</label>
-                    <input type="file" value="Upload Zip" accept=".zip" />
+                    <input type="file" id="file" value="Upload Zip" accept=".zip" data-bind="event: {change: fileUpload}" name="file"/>
                 </div>
                 <!-- /ko -->
                 <!-- ko ifnot: codeSourceType() == "folder" -->
@@ -35,9 +35,9 @@
             <div class="col-md-12">
                 <div class="col-md-6">
                     <ul class="factor_list">
-                        <li><label><input type="checkbox" checked="true" value="Logs" placeholder="Externalised Logging" />Externalised Logging</label></li>
-                        <li><label><input type="checkbox" checked="true" value="Config" />Externalised Config</label></li>
-                        <li><label><input type="checkbox" checked="true" value="Backing" />Backing Services</label></li>
+                        <li><label><input type="checkbox" checked value="Logs" placeholder="Externalised Logging" />Externalised Logging</label></li>
+                        <li><label><input type="checkbox" checked value="Config" />Externalised Config</label></li>
+                        <li><label><input type="checkbox" checked value="Backing" />Backing Services</label></li>
                         <li><label><input type="checkbox" value="Codebase" disabled />Single Codebase</label></li>
                         <li><label><input type="checkbox" value="Dependencies" disabled />Isolated Dependencies</label></li>
                         <li><label><input type="checkbox" value="Deployment" disabled />Deployment Methodology</label></li>
@@ -57,9 +57,9 @@
             </div>
 
         </div>
-        <input type="button" class="btn btn-primary validate-btn" data-bind="click: Validate" value="Validate" />
+        <input type="button" class="btn btn-primary validate-btn" value="Validate" id="btnSubmit" data-bind="click: Validate"/>
+        @*data-bind="click: Validate"*@
 
-        
         <div class="form-group">
             <div class="col-md-12">
                 <table id="myTable" style="width:100%"></table>

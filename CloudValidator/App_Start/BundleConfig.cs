@@ -21,6 +21,7 @@ namespace CloudValidator
             bundles.Add(new ScriptBundle("~/bundles/index").Include("~/Scripts/index.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/admin").Include("~/Scripts/admin.js"));
+            bundles.Add(new ScriptBundle("~/bundles/test").Include("~/Scripts/test.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.

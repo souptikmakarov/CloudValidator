@@ -1,9 +1,16 @@
 ﻿var dtSystemCustomerSet;
 $(function () {
+
+    function GetBaseUrl() {
+        return window.location.origin;
+    }
+
     function ValidatorViewModel() {
         var self = this;
         self.codeSourceType = ko.observable("folder");
         self.codeSourceLink = ko.observable();
+        var FileObject;
+        //self.
 
         function toggleIcon(e) {
             $(e.target)
@@ -19,10 +26,44 @@ $(function () {
         //    }
         //});
 
+        self.fileUpload = function (data, e) {
+            FileObject = e.target.files[0];
+            //var reader = new FileReader();
+
+            //reader.onloadend = function (onloadend_e) {
+            //    FileObject = reader.result; // Here is your base 64 encoded file. Do with it what you want.
+            //    self.codeSourceLink(FileObject);
+            //};
+
+            //if (file) {
+            //    reader.readAsDataURL(file);
+            //}
+        };
 
 
-
-        self.Validate = function () {
+        self.Validate = function (data, e) {
+            if (FileObject == undefined) {
+                alert("Please upload the folder");
+                return false;
+            }
+            var fd = new FormData();
+            fd.append('file', FileObject);
+            //fd.append("CustomField", "This is some extra data");
+            $.ajax({
+                url: '/api/Validate/UploadProject',
+                type: 'POST',
+                data: fd,
+                success: function (data) {
+                    data = data.filename.split('\\');
+                    self.getValidationResponse(data[data.length - 1]);
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
 
             // $('#myTable').DataTable();
             var requestApiPayload = "{\"Application\":\"DotNet\",\"FolderName\":\"helloworld_v1\",\"Factors\":[\"Logs\",\"Config\"]}";
@@ -124,10 +165,7 @@ $(function () {
             /* Formatting function for row details - modify as you need */
             function format(d) {
                 var www = '<div id="codeeditor"></div>';
-
-
-
-
+                
                 return '<div>' +
                     '<section class="intro">' +
                     '<row>' +
@@ -297,6 +335,32 @@ $(function () {
             //    "paging": true
             //});
 
+        }
+
+        self.getValidationResponse = function (location) {
+            var factors = [];
+            $.each($('input:checked'), (i, val) => {
+                factors.push(val.value);
+            });
+            var postData = {
+                Application: "DotNet",
+                FolderName: location,
+                Factors: factors
+            }
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:56786/api/validate',
+                xhrFields: { withCredentials: false },
+                contentType: 'application/json',
+                crossDomain: true,
+                data: JSON.stringify(postData),
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (requestObject, errorMessage, exception) {
+                    alert("Error occured ");
+                }
+            });
         }
     }
 
