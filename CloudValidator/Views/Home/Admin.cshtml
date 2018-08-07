@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="loader" data-bind="visible: isLoading"></div>
-    <div class="panel panel-danger" data-bind="visible: includeRules().length > 0">
+    <div class="panel panel-success" data-bind="visible: includeRules().length > 0">
         <div class="panel-heading">
             <h3 class="panel-title">Include Rules</h3>
         </div>
@@ -51,6 +51,8 @@
             <div class="newRules" data-bind="foreach: includeRules">
                 <div class="well">
                     <input type="text" class="form-control" placeholder="Enter rule name" data-bind="value: RuleName" />
+                    <input type="text" class="form-control" placeholder="Enter rule recommendations" data-bind="value: Recommendations" style="max-width: unset; margin-top:10px"/>
+                    <input type="text" class="form-control" placeholder="Enter rule impact" data-bind="value: Impacts" style="max-width: unset; margin-top:10px" />
                     <div data-bind="foreach: RuleConditions" class="rule_conditions">
                         <div class="row rule_condition">
                             <div class="col-sm-4">
@@ -83,7 +85,7 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-success" data-bind="visible: excludeRules().length > 0">
+    <div class="panel panel-danger" data-bind="visible: excludeRules().length > 0">
         <div class="panel-heading">
             <h3 class="panel-title">Exclude Rules</h3>
         </div>
@@ -92,8 +94,9 @@
             <button class="btn btn-primary" data-bind="click: addExcludeRule">Add Rule</button>
             <div class="newRules" data-bind="foreach: excludeRules">
                 <div class="well">
-
                     <input type="text" class="form-control" placeholder="Enter rule name" data-bind="value: RuleName" />
+                    <input type="text" class="form-control" placeholder="Enter rule recommendations" data-bind="value: Recommendations" style="max-width: unset; margin-top:10px" />
+                    <input type="text" class="form-control" placeholder="Enter rule impact" data-bind="value: Impacts" style="max-width: unset; margin-top:10px" />
                     <div data-bind="foreach: RuleConditions" class="rule_conditions">
                         <div class="row rule_condition">
                             <div class="col-sm-4">

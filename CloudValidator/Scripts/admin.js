@@ -11,6 +11,8 @@
         var self = this;
         self.RuleName = "";
         self.RuleConditions = ko.observableArray();
+        self.Recommendations = "";
+        self.Impacts = "";
     }
     function AdminViewModel() {
         var self = this;
@@ -72,6 +74,8 @@
                             $.each(obj.Exclude, (i, val) => {
                                 var tempRule = new Rule();
                                 tempRule.RuleName = val.RuleName;
+                                tempRule.Recommendations = val.Recommendations.join(',');
+                                tempRule.Impacts = val.Impacts.join(',');
                                 $.each(val.RuleConditions, (j, cond) => {
                                     $.each(cond, (key, value) => {
                                         var tempRuleCond = new RuleCondition();
@@ -122,9 +126,14 @@
                 Exclude: []
             };
             $.each(self.includeRules(), (i, val) => {
+                var recomm = val.Recommendations == "" ? [] : val.Recommendations.split(',');
+                var impact = val.Impacts == "" ? [] : val.Impacts.split(',');
+
                 var tempRule = {
                     RuleName: val.RuleName,
-                    RuleConditions: []
+                    RuleConditions: [],
+                    Recommendations: recomm,
+                    Impacts: impact
                 };
                 $.each(val.RuleConditions(), (j, cond) => {
                     var tempRuleCond = {};
@@ -138,9 +147,13 @@
                 toStore.Include.push(tempRule);
             });
             $.each(self.excludeRules(), (i, val) => {
+                var recomm = val.Recommendations == "" ? [] : val.Recommendations.split(',');
+                var impact = val.Impacts == "" ? [] : val.Impacts.split(',');
                 var tempRule = {
                     RuleName: val.RuleName,
-                    RuleConditions: []
+                    RuleConditions: [],
+                    Recommendations: recomm,
+                    Impacts: impact
                 };
                 $.each(val.RuleConditions(), (j, cond) => {
                     var tempRuleCond = {};
