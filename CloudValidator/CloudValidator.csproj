@@ -169,6 +169,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ApplicationConstants.cs" />
+    <Compile Include="Models\ApplicationUrl.cs" />
     <Compile Include="Models\ElasticDataProvider.cs" />
     <Compile Include="Models\FileHelper.cs" />
     <Compile Include="Models\InMemoryMultipartFormDataStreamProvider.cs" />
@@ -333,6 +334,7 @@
     <Content Include="Scripts\sb-admin-2.min.js" />
     <Content Include="Scripts\test.js" />
     <Content Include="Scripts\theme-monokai.js" />
+    <Content Include="Views\Home\FileReportTemplate.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

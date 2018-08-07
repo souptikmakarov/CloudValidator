@@ -12,6 +12,7 @@ namespace CloudValidator.Models
         public static string ElasticUserName { get; } = "elastic";
         //public static string ElasticUserName { get; } = "yyha2fhyz2";
         public static string ElasticPassword { get; } = "changeme";
+        public static string BaseFolderLocation { get; } = @"C:\My_Files\Projects\CloudValidator\Code\";
         //public static string ElasticPassword { get; } = "n0v42zjtvl";
 
     }

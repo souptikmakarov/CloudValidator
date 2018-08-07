@@ -27,5 +27,10 @@ namespace CloudValidator.Controllers
         {
             return View();
         }
+
+        public ActionResult FileReportTemplate()
+        {
+            return File(Server.MapPath("/Views/Home/") + "FileReportTemplate.html", "text/html");
+        }
     }
 }

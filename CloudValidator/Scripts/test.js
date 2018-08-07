@@ -1,45 +1,76 @@
 ﻿$(function () {
     var myController = function () {
         var self = this;
-        self.photoUrl = ko.observable();
-        self.fileUpload = function (data, e) {
-            var file = e.target.files[0];
-            var reader = new FileReader();
+        //self.toBeShown = ko.observable(false);
 
-            reader.onloadend = function (onloadend_e) {
-                var result = reader.result; // Here is your base 64 encoded file. Do with it what you want.
-                self.photoUrl(result);
-            };
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        };
+        //self.LoadComponent = function () {
+        //    ko.components.register('my-component', {
+        //        template: { fromUrl: 'fileReportTemplate.html', maxCacheAge: 1234 },
+        //        viewModel: {
+        //            createViewModel: function (params, componentInfo) {
+        //                var model = new ComponentViewModel();
+        //                model.rules.push({
+        //                    ruleName: "Hello",
+        //                    ruleCondition: "World"
+        //                });
+        //                model.rules.push({
+        //                    ruleName: "Teplate",
+        //                    ruleCondition: "Testing"
+        //                });
+        //                model.recommendations.push({
+        //                    text: "Hello",
+        //                    data: "World"
+        //                });
+        //                model.recommendations.push({
+        //                    text: "Teplate",
+        //                    data: "Testing"
+        //                });
+        //                return model;
+        //            }
+        //        }
+        //    });
+        //    self.toBeShown(true);
+        //}
     };
-    ko.applyBindings(new myController());
+
+    //function ComponentViewModel(params) {
+    //    var self = this;
+    //    self.rules = ko.observableArray([]);
+    //    self.recommendations = ko.observableArray([]);
+    //}
+
+    //var templateFromUrlLoader = {
+    //    loadTemplate: function (name, templateConfig, callback) {
+    //        if (templateConfig.fromUrl) {
+    //            // Uses jQuery's ajax facility to load the markup from a file
+    //            var fullUrl = '/Home/FileReportTemplate';
+    //            $.get(fullUrl, function (markupString) {
+    //                // We need an array of DOM nodes, not a string.
+    //                // We can use the default loader to convert to the
+    //                // required format.
+    //                ko.components.defaultLoader.loadTemplate(name, markupString, callback);
+    //            });
+    //        } else {
+    //            // Unrecognized config format. Let another loader handle it.
+    //            callback(null);
+    //        }
+    //    }
+    //};
+
+    
+
+    //// Register it
+    //ko.components.loaders.unshift(templateFromUrlLoader);
+    var vm = new myController()
+
+    //$('#load_button').on('click', function (e) {
+    //    vm.LoadComponent();  
+    //});
+    ko.applyBindings(vm);
 
 
     var editor = ace.edit("codeeditor");
     editor.setTheme("ace/theme/monokai");
     editor.getSession().setMode("ace/mode/csharp");
-
-    //$('#codeeditor').html(
-    //    'using System;' + '<br/>' +
-    //    'using System.Collections.Generic;' + '<br/>' +
-    //    'using System.Linq;' + '<br/>' +
-    //    'using System.Net;' + '<br/>' +
-    //    'using System.Net.Http;' + '<br/>' +
-    //    'using System.Threading.Tasks;' + '<br/>' +
-    //    'using System.Web.Http;' + '<br/>' +
-
-    //    'namespace CloudValidator.Controllers {' + '<br/>' +
-    //    'public class ValidateController : ApiController' + '<br/>' +
-    //    '{' + '<br/>' +
-    //    'public async Task < IHttpActionResult > UploadProject() {' + '<br/>' +
-    //    '   return Json(new { hello = "world" });' + '<br/>' +
-    //    '}' + '<br/>' +
-    //    '}' + '<br/>' +
-    //    '}'
-    //);
-    $('#codeeditor').load("http://localhost:6699/api/Validate/GetFile", { path: "C:\My_Files\Projects\CloudValidator\Code\source_20180806230735111\source\HomeController.cs" });
+    $('#codeeditor').load("http://localhost:6699/api/Validate/ReadFile?path=" + "C:\\My_Files\\Projects\\CloudValidator\\Code\\\\source_20180807215158244\\source\\HomeController.cs" );
 });

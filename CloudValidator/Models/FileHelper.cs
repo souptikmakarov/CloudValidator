@@ -56,10 +56,8 @@ namespace CloudValidator.Models
             Stream input = await file1.ReadAsStreamAsync();
             string directoryName = String.Empty;
             string URL = String.Empty;
-            //string tempDocUrl = WebConfigurationManager.AppSettings["DocsUrl"];
 
             var path = AppDomain.CurrentDomain.BaseDirectory;
-            //var path = HttpRuntime.AppDomainAppPath;
             directoryName = Path.Combine(path, "App_Data");
             filename = Path.Combine(directoryName, thisFileName);
 
@@ -72,10 +70,9 @@ namespace CloudValidator.Models
             using (Stream file = File.OpenWrite(filename))
             {
                 input.CopyTo(file);
-                //close file  
                 file.Close();
             }
-            var destination = UnzipFile(filename);
+            var destination = UnzipFile(filename, file2[0]);
 
             return new
             {
@@ -84,17 +81,11 @@ namespace CloudValidator.Models
             };
         }
 
-        private string UnzipFile(string path)
+        public string UnzipFile(string path, string originalName)
         {
-            var pathFormatter = path.Split('\\');
-            string destinationPath = "";
-            for (int i = 0; i < pathFormatter.Length - 3; i++)
-            {
-                destinationPath += pathFormatter[i] + "\\";
-            }
-            destinationPath += "Code\\" + pathFormatter[pathFormatter.Length - 1].Split('.')[0];
+            var destinationPath = ApplicationConstants.BaseFolderLocation + Path.GetFileNameWithoutExtension(path);
             ZipFile.ExtractToDirectory(path, destinationPath);
-            return destinationPath;
+            return string.Concat(destinationPath, "\\", originalName);
         }
     }
 }
