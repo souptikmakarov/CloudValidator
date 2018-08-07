@@ -22,6 +22,19 @@ namespace CloudValidator
 
             bundles.Add(new ScriptBundle("~/bundles/admin").Include("~/Scripts/admin.js"));
             bundles.Add(new ScriptBundle("~/bundles/test").Include("~/Scripts/test.js"));
+            bundles.Add(new ScriptBundle("~/bundles/chart").Include("~/Scripts/Chart.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/sb-admin").Include(
+                        "~/Content/metisMenu/metisMenu.min.js",
+                        "~/Content/raphael/raphael.min.js",
+                        "~/Content/morrisjs/morris.min.js",
+                        "~/Scripts/sb-admin-2.js"));
+
+            bundles.Add(new StyleBundle("~/Content/sb-admin").Include(
+                      "~/Content/metisMenu/metisMenu.min.css",
+                      "~/Content/sb-admin-2.css",
+                      "~/Content/morrisjs/morris.css",
+                      "~/Content/font-awesome/css/font-awesome.min.css"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.

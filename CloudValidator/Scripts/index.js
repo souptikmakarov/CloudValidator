@@ -1,16 +1,22 @@
 ﻿var dtSystemCustomerSet;
 $(function () {
-
     function GetBaseUrl() {
         return window.location.origin;
+    }
+
+    function FactorReport() {
+        var self = this;
+
     }
 
     function ValidatorViewModel() {
         var self = this;
         self.codeSourceType = ko.observable("folder");
         self.codeSourceLink = ko.observable();
+        self.factorWiseReport = ko.observableArray([]);
+        self.isValidationComplete = ko.observable(false);
+        self.isInputPanelCollapsed = ko.observable(false);
         var FileObject;
-        //self.
 
         function toggleIcon(e) {
             $(e.target)
@@ -20,24 +26,9 @@ $(function () {
         }
         $('.panel-group').on('hidden.bs.collapse', toggleIcon);
         $('.panel-group').on('shown.bs.collapse', toggleIcon);
-        //self.codeSource.subscribe(function () {
-        //    if (self.codeSource() == "folder") {
-
-        //    }
-        //});
 
         self.fileUpload = function (data, e) {
             FileObject = e.target.files[0];
-            //var reader = new FileReader();
-
-            //reader.onloadend = function (onloadend_e) {
-            //    FileObject = reader.result; // Here is your base 64 encoded file. Do with it what you want.
-            //    self.codeSourceLink(FileObject);
-            //};
-
-            //if (file) {
-            //    reader.readAsDataURL(file);
-            //}
         };
 
 
@@ -64,11 +55,7 @@ $(function () {
                 contentType: false,
                 processData: false
             });
-
-            // $('#myTable').DataTable();
-            var requestApiPayload = "{\"Application\":\"DotNet\",\"FolderName\":\"helloworld_v1\",\"Factors\":[\"Logs\",\"Config\"]}";
-
-           
+                       
 
             var table = $('#myTable').DataTable({
                 "ajax": "Content/ajaxOutput.json",
@@ -355,14 +342,47 @@ $(function () {
                 crossDomain: true,
                 data: JSON.stringify(postData),
                 success: function (data) {
-                    console.log(data);
+                    self.prepareComplianceReport(data);
                 },
                 error: function (requestObject, errorMessage, exception) {
                     alert("Error occured ");
                 }
             });
         }
+
+        self.prepareComplianceReport = function (data) {
+            self.isInputPanelCollapsed(true);
+            self.isValidationComplete(true);
+            self.drawPieChart();
+            //$.each(data, (i, val) => {
+
+            //});
+        }
+
+        self.showInputSection = function () {
+            self.isInputPanelCollapsed(false);
+        }
+
+        self.drawPieChart = function (data) {
+            Morris.Donut({
+                element: 'compliance_chart',
+                data: [{
+                    label: "Unverified",
+                    value: 7
+                }, {
+                    label: "Passed",
+                    value: 3
+                }, {
+                    label: "Failed",
+                    value: 2
+                }],
+                resize: true,
+                colors: ["#3980b5", "#58d68d", "#fd7364"]
+            });
+        }
     }
+
+
 
     var vm = new ValidatorViewModel();
     ko.applyBindings(vm);

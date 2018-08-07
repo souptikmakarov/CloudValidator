@@ -13,6 +13,11 @@ namespace CloudValidator.Controllers
             return View();
         }
 
+        public ActionResult New_Index()
+        {
+            return View("Index2.cshtml");
+        }
+
         public ActionResult Admin()
         {
             return View();

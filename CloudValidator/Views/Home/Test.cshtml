@@ -2,6 +2,6 @@
 @{
     ViewBag.Title = "Test";
 }
+
+<div id="codeeditor"></div>
 @Scripts.Render("~/bundles/test")
-<img class="myImage" data-bind="attr: {src: photoUrl() || 'images/tempImage.png'}" />
-<input data-bind="event: {change: $root.fileUpload}" type="file" accept="image/*" class="fileChooser" />

@@ -1,10 +1,15 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@Scripts.Render("~/bundles/index")
+@Styles.Render("~/Content/sb-admin")
 
 <section class="step1">
-    <form class="form-horizontal" id="validationForm" enctype="multipart/form-data" method="post" name="validationForm">
+    <div class="panel panel-green" data-bind="visible: isInputPanelCollapsed, click: showInputSection">
+        <div class="panel-heading">
+            Click to show input section
+        </div>
+    </div>
+    <form class="form-horizontal" id="validationForm" enctype="multipart/form-data" method="post" name="validationForm" data-bind="visible: !isInputPanelCollapsed()">
         <div class="form-group">
             <div class="col-md-12">
                 <div class="col-md-6">
@@ -19,7 +24,7 @@
                 <!-- ko if: codeSourceType() == "folder" -->
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="codesource">Upload zipped folder of your project:</label>
-                    <input type="file" id="file" value="Upload Zip" accept=".zip" data-bind="event: {change: fileUpload}" name="file"/>
+                    <input type="file" id="file" value="Upload Zip" accept=".zip" data-bind="event: {change: fileUpload}" name="file" />
                 </div>
                 <!-- /ko -->
                 <!-- ko ifnot: codeSourceType() == "folder" -->
@@ -57,8 +62,7 @@
             </div>
 
         </div>
-        <input type="button" class="btn btn-primary validate-btn" value="Validate" id="btnSubmit" data-bind="click: Validate"/>
-        @*data-bind="click: Validate"*@
+        <input type="button" class="btn btn-primary validate-btn" value="Validate" id="btnSubmit" data-bind="click: Validate" />
 
         <div class="form-group">
             <div class="col-md-12">
@@ -68,3 +72,129 @@
 
     </form>
 </section>
+<section class="compliance_report" data-bind="visible: isValidationComplete">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-1"></div>
+        <div class="col-lg-6 col-md-6 col-sm-10">
+            <div id="compliance_chart"></div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-1"></div>
+    </div>
+</section>
+<section class="detailed_report" data-bind="visible: isValidationComplete">
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-comments fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">26</div>
+                            <div>New Comments!</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-tasks fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">12</div>
+                            <div>New Tasks!</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">124</div>
+                            <div>New Orders!</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-support fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">13</div>
+                            <div>Support Tickets!</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-support fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">13</div>
+                            <div>Support Tickets!</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@Scripts.Render("~/bundles/sb-admin")
+@Scripts.Render("~/bundles/index")

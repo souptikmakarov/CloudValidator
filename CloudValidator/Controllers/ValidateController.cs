@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,93 +14,62 @@ namespace CloudValidator.Controllers
 {
     public class ValidateController : ApiController
     {
-        public async Task<IHttpActionResult> UploadProject(HttpRequestMessage request) {
-            var stream = await GetStreamFromUploadedFile2(request);
-            return stream;
-            //return Json(new { hello = "world"});
+        FileHelper fh;
+        public ValidateController()
+        {
+            fh = new FileHelper();
         }
+        string bookPath_Pdf = @"C:\My_Files\Projects\CloudValidator\Code\source_20180806230735111\source\HomeController.cs";
         
-        public async Task<dynamic> GetStreamFromUploadedFile2(HttpRequestMessage Request) {
-
-            if (!Request.Content.IsMimeMultipartContent())
-            {
-                return Json(new
-                {
-                    error = "Unsupported File",
-                    status = false
-                });
-            }
-
-            var provider = await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(new InMemoryMultipartFormDataStreamProvider());
-            
-            IList<HttpContent> files = provider.Files;
-
-            HttpContent file1 = files[0];
-            var file2 = file1.Headers.ContentDisposition.FileName.Trim('\"').Split('.');
-            var thisFileName = file2[0] + "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "." + file2[1];
-
-            ////-------------------------------------For testing----------------------------------  
-            //to append any text in filename.  
-            //var thisFileName = file1.Headers.ContentDisposition.FileName.Trim('\"') + DateTime.Now.ToString("yyyyMMddHHmmssfff"); //ToDo: Uncomment this after UAT as per Jeeevan  
-
-            //List<string> tempFileName = thisFileName.Split('.').ToList();  
-            //int counter = 0;  
-            //foreach (var f in tempFileName)  
-            //{  
-            //    if (counter == 0)  
-            //        thisFileName = f;  
-
-            //    if (counter > 0)  
-            //    {  
-            //        thisFileName = thisFileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "." + f;  
-            //    }  
-            //    counter++;  
-            //}  
-
-            ////-------------------------------------For testing----------------------------------  
-
-            string filename = String.Empty;
-            Stream input = await file1.ReadAsStreamAsync();
-            string directoryName = String.Empty;
-            string URL = String.Empty;
-            //string tempDocUrl = WebConfigurationManager.AppSettings["DocsUrl"];
-
-            var path = AppDomain.CurrentDomain.BaseDirectory;
-            //var path = HttpRuntime.AppDomainAppPath;
-            directoryName = Path.Combine(path, "App_Data");
-            filename = Path.Combine(directoryName, thisFileName);
-
-            //Deletion exists file  
-            if (File.Exists(filename))
-            {
-                File.Delete(filename);
-            }
-
-            using (Stream file = File.OpenWrite(filename))
-            {
-                input.CopyTo(file);
-                //close file  
-                file.Close();
-            }
-            var destination = UnzipFile(filename);
-
-            return Json(new
-            {
-                filename = destination,
-                status = true
-            });
+        public async Task<IHttpActionResult> UploadProject(HttpRequestMessage request) {
+            var stream = await fh.GetStreamFromUploadedFile2(request);
+            return Json(stream);
         }
 
-        private string UnzipFile(string path) {
-            var pathFormatter = path.Split('\\');
-            string destinationPath = "";
-            for (int i = 0; i < pathFormatter.Length - 3; i++)
-            {
-                destinationPath += pathFormatter[i] + "\\";
-            }
-            destinationPath += "Code\\" + pathFormatter[pathFormatter.Length - 1].Split('.')[0];
-            ZipFile.ExtractToDirectory(path, destinationPath);
-            return destinationPath;
+
+        [HttpGet]
+        [Route("GetFile/{path}")]
+        public IHttpActionResult GetFile(string path)
+        {
+            //string bookName = "HomeController.cs";
+            ////converting Pdf file into bytes array  
+            //var dataBytes = File.ReadAllBytes(bookPath_Pdf);
+            ////adding bytes to memory stream   
+            //var dataStream = new MemoryStream(dataBytes);
+            //return new eBookResult(dataStream, Request, bookName);
+
+            string text = File.ReadAllText(bookPath_Pdf);
+            text = HttpUtility.HtmlEncode(text);
+            text = text.Replace("\r\n", "\r");
+            text = text.Replace("\n", "\r");
+            text = text.Replace("\r", "</br>\r\n");
+            text = text.Replace("  ", " &nbsp;");
+            return Ok(text);
+        }
+    }
+
+    public class eBookResult : IHttpActionResult
+    {
+        MemoryStream bookStuff;
+        string PdfFileName;
+        HttpRequestMessage httpRequestMessage;
+        HttpResponseMessage httpResponseMessage;
+        public eBookResult(MemoryStream data, HttpRequestMessage request, string filename)
+        {
+            bookStuff = data;
+            httpRequestMessage = request;
+            PdfFileName = filename;
+        }
+        public System.Threading.Tasks.Task<HttpResponseMessage> ExecuteAsync(System.Threading.CancellationToken cancellationToken)
+        {
+            httpResponseMessage = httpRequestMessage.CreateResponse(HttpStatusCode.OK);
+            httpResponseMessage.Content = new StreamContent(bookStuff);
+            //httpResponseMessage.Content = new ByteArrayContent(bookStuff.ToArray());  
+            httpResponseMessage.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            httpResponseMessage.Content.Headers.ContentDisposition.FileName = PdfFileName;
+            httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+            return System.Threading.Tasks.Task.FromResult(httpResponseMessage);
         }
     }
 }
